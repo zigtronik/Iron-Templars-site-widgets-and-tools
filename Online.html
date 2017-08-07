@@ -1,10 +1,9 @@
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.2.min.js" type="text/javascript"></script>
+<div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js" type="text/javascript"></script>
 <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jstorage.js"></script>
-
 <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-console.log("here");
 (function($) {
 	var ViewModel = function(options) {
 		var self = this;
@@ -35,9 +34,7 @@ console.log("here");
 		    
 		    
 			var members = $.jStorage.get("outfit_members");
-			console.log('members');
-			console.log(members);
-		console.log('endmembers');
+			
 			if (!members)
 			{
 				self.refresh();
@@ -49,15 +46,13 @@ console.log("here");
 		
 		this.refresh = function() {
 		   
-		    console.log('refresh');
+		    
 			self.IsLoading(true);
 			$.ajax({
 				dataType: "jsonp",
 				url: this.url
 			}).done(function ( data ) {
-			    console.log('data');
-			    console.log(data);
-			     console.log('enddata');
+			   
 				self.Members(data.outfit_member_list);
 				$.jStorage.set("outfit_members", data.outfit_member_list, { TTL : options.cachettl });
 				self.IsLoading(false);
@@ -70,8 +65,6 @@ console.log("here");
 			outfitid: '37545997833612745',
 			cachettl: 5 * 60 * 1000 // 5 minutes
 		};
-	console.log(options);
-
 		var viewmodel = new ViewModel(options);
 		
 		ko.applyBindings(viewmodel, $('#memberlist')[0]);
@@ -96,16 +89,6 @@ g.addBehavior){g.style.behavior="url(#default#userData)";document.getElementsByT
 u):"userDataBehavior"==f&&setInterval(u,1E3);E();"addEventListener"in window&&window.addEventListener("pageshow",function(a){a.persisted&&u()},!1)})()})();
 </script>
 <div id="memberlist">
-	<div style="float:left; padding-left:10px">
-		<span href="#" data-bind="visible: IsLoading" style="display: none;">loading...</span>
-	</div>
-	<div style="float:left; padding-left:10px">
-		<label><input type="checkbox" data-bind="checked: HideOffline">Hide offline members</label>
-	</div>
-	<div style="float:right; padding-right:10px">
-		<a href="#" data-bind="click: refresh">refresh</a>
-	</div>
-	<div style="background:#fff;color:#000">
 	<table width="100%" style="width:100%;clear:both">
 		<tbody><tr style="font-weight:bold">
 			<td>
@@ -118,10 +101,10 @@ u):"userDataBehavior"==f&&setInterval(u,1E3);E();"addEventListener"in window&&wi
 				<span>Playing:</span>
 			</td>
 		</tr>
-		</tbody><tbody data-bind="foreach: MembersSorted">
+		</tbody>
+		<tbody data-bind="foreach: MembersSorted">
 		    <tr>
 				<td style="width:100px; text-overflow: ellipsis;
-
   /* Required for text-overflow to do anything */
   white-space: nowrap;
   overflow: hidden;">
@@ -135,6 +118,6 @@ u):"userDataBehavior"==f&&setInterval(u,1E3);E();"addEventListener"in window&&wi
 				</td>
 			</tr></tbody>
 	</table>
-	</div>
 </div>
-		
+
+	
